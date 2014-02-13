@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+.np_button
+{
+	background:#3585A4;
+	padding:10px;
+	border:#3E83A8;
+	color:#FFF;
+	cursor:pointer;
+	text-align:center;
+	border-radius:3px;
+	box-shadow:1px 1px 3px #9B9B9B;
+}
+
