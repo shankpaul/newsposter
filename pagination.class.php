@@ -1,5 +1,5 @@
 <?php
-class pagination{
+class nppagination{
 /*
 Script Name: *Digg Style Paginator Class
 Script URI: http://www.mis-algoritmos.com/2007/05/27/digg-style-pagination-class/

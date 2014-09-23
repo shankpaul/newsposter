@@ -5,7 +5,7 @@ Plugin URI: http://www.nuevalgo.com
 Description: For easily creating and manage news for your websites.
 Author: Shan K Paul
 Version: 1.0
-Author URI: 
+Author URI: http://www.tagprof.com/shan/ 
 */
 define('PLUGIN_URL',  get_option('siteurl').'/wp-content/plugins/news_poster/');
 global $wpdb;
@@ -105,7 +105,7 @@ function getNews($np_config="")
      * Inter facing with wordpress
      */
     global $wpdb;
-    $sql="SELECT a.`news_id` AS id,
+    $sql="SELECT a.`news_id` AS id,a.`sort_order`,
 	a.`title` AS title,
 	a.`content` AS content,
 	b.`category_name` AS category,
@@ -113,11 +113,9 @@ function getNews($np_config="")
 	a.`url` AS url,
 	a.`expiry_date` AS expirydate,
 	a.`post_time` AS posttime 
-        FROM np_news a,np_category b WHERE a.`category`=b.`cat_id` AND a.disabled=0  AND (a.`expiry_date`>= CURDATE() OR a.`expiry_date` IS NULL ) order by a.news_id desc";
+        FROM np_news a,np_category b WHERE a.`category`=b.`cat_id` AND a.disabled=0  AND (a.`expiry_date`>= CURDATE() OR a.`expiry_date` IS NULL ) order by a.sort_order ASC";
     
-   
-    
-    $np_box=array();
+     $np_box=array();
     $results=$wpdb->get_results($sql);
     if(count($results)>0)
     {    
@@ -182,9 +180,9 @@ function getNews($np_config="")
 if (is_admin()) 
 {
 	add_action('admin_menu', 'news_poster_add_to_menu');
-	if(!class_exists('pagination'))
-	include_once ('pagination.class.php');
+	
 }
+
 register_activation_hook(__FILE__, 'install_news_poster');
 register_deactivation_hook( __FILE__, 'uninstall_news_poster' );
 

@@ -186,7 +186,7 @@ table.np_table td a
       <br>
       <h2>News Listing</h2>
       <?php 
-	   $rows = $wpdb->get_results("select * from np_news a,np_category b where a.category=b.cat_id");
+	   $rows = $wpdb->get_results("select * from np_news a,np_category b where a.category=b.cat_id order by sort_order asc");
 	   $items=count($rows);
 	   $limit="";
 	   if($items > 0)
@@ -197,6 +197,7 @@ table.np_table td a
 					$p->limit(5); // Limit entries per page
 					$p->target(get_permalink()."admin.php?page=news-poster");
 					//$p->urlFriendly();
+                                        if(isset($p->paging))
 					$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
 					$p->calculate(); // Calculates what to show
 					$p->parameterName('paging');
@@ -235,6 +236,7 @@ table.np_table td a
            <!-- <th  width="2%"><div align="center">No</div></th>-->
 			<th  width="50%" align="left" >News Title</th>
             <th  width="10%" align="left">Category</th>
+            <th width="8%" align="center">Sort order</th> 
             <th width="8%" align="left">Post Date</th>		
             <th width="8%" align="left">Expiration</th> 
             <th width="6%" align="left">Status</th>
@@ -243,7 +245,7 @@ table.np_table td a
 		<tbody>
 		
 				<?php
-	   $rows = $wpdb->get_results("select * from np_news a,np_category b where a.category=b.cat_id order  by news_id desc $limit");
+	   $rows = $wpdb->get_results("select * from np_news a,np_category b where a.category=b.cat_id order by sort_order asc $limit");
 	$no=0;
 	$nodata=false;
 	if(count($rows)>0)
@@ -267,6 +269,7 @@ table.np_table td a
 					</div>
 					</td>
 					<td> <?php echo $obj->category_name; ?>	</td>
+					<td alig="center"> <?php echo $obj->sort_order; ?></td>
 					
 					<td> <?php echo  date("F j, Y", strtotime($obj->post_date)); ; ?>	</td>
 					<td> <?php if(  $obj->expiry_date!="") echo  date("F j, Y", strtotime($obj->expiry_date)); ?>	</td>
